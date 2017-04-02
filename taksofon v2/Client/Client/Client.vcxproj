@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="client.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="process.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="client.h" />
+    <ClInclude Include="process.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F320813A-1AB0-4F1D-B255-E9B0BC7DDEAF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -141,15 +150,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\taksofon\taksofon\client.cpp" />
-    <ClCompile Include="..\..\..\taksofon\taksofon\main.cpp" />
-    <ClCompile Include="..\..\..\taksofon\taksofon\process.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\taksofon\taksofon\client.h" />
-    <ClInclude Include="..\..\..\taksofon\taksofon\process.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

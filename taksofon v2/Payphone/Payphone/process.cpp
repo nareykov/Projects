@@ -14,25 +14,27 @@ using namespace std;
 
 void Process::START(int argc, char *argv[])
 {
-		
 #ifdef _WIN32
-			UserEvent = OpenEvent(EVENT_ALL_ACCESS, FALSE, UserEventName);
-			ATmEvent = OpenEvent(EVENT_ALL_ACCESS, FALSE, ATmEventName);
 
 
-			hNamedPipe = CreateFile(PipeName, GENERIC_READ | GENERIC_WRITE,
-				0, NULL, OPEN_EXISTING, 0, NULL);
+	UserEvent = CreateEvent(NULL, TRUE, FALSE, UserEventName);
+	ATmEvent = CreateEvent(NULL, TRUE, FALSE, ATmEventName);
 
-			system("title Payphone");
+	hNamedPipe = CreateNamedPipe(PipeName, PIPE_ACCESS_DUPLEX,
+		PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
+		PIPE_UNLIMITED_INSTANCES,
+		512, 512, 5000, NULL);
 
-
+	system("title Payphone");
 #endif
+
 			Payphone *phone = new Payphone(1);
 
 
 			while (true)
 			{
 #ifdef _WIN32
+
 				WaitForSingleObject(UserEvent, INFINITE);
 				ResetEvent(UserEvent);
 #endif
