@@ -5,8 +5,10 @@ LPSTR Process::PipeName = "\\\\.\\pipe\\$SecurityATmLine$";
 HANDLE Process::hNamedPipe;
 HANDLE Process::UserEvent;
 LPSTR Process::UserEventName = "User";
-HANDLE Process::ATmEvent;
-LPSTR Process::ATmEventName = "ATM";
+HANDLE Process::PhoneEvent;
+LPSTR Process::PhoneEventName = "Phone";
+HANDLE Process::hSemaphore;
+LPSTR Process::SemaphoreName = "Semaphore";
 #endif
 
 using namespace std;
@@ -18,12 +20,19 @@ void Process::START(int argc, char *argv[])
 
 
 	UserEvent = CreateEvent(NULL, TRUE, FALSE, UserEventName);
-	ATmEvent = CreateEvent(NULL, TRUE, FALSE, ATmEventName);
+	PhoneEvent = CreateEvent(NULL, TRUE, FALSE, PhoneEventName);
 
 	hNamedPipe = CreateNamedPipe(PipeName, PIPE_ACCESS_DUPLEX,
 		PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
 		PIPE_UNLIMITED_INSTANCES,
 		512, 512, 5000, NULL);
+
+	hSemaphore = CreateSemaphore(NULL, 1, 1, SemaphoreName);
+
+	if (hSemaphore == NULL)
+	{
+		cout << "error create semaphore" << endl;
+	}
 
 	system("title Payphone");
 #endif
@@ -61,12 +70,14 @@ void Process::START(int argc, char *argv[])
 					WriteFile(hNamedPipe, reinterpret_cast<char*>(&i), sizeof(int), NULL, NULL);
 					WriteFile(hNamedPipe, answer.c_str(), i, NULL, NULL);
 
-					SetEvent(ATmEvent);
+					SetEvent(PhoneEvent);
 #endif
 				}
 				else if (!strncmp(buf, "Shutdown", 8))
 				{
 					DisconnectNamedPipe(hNamedPipe);
+					SetEvent(PhoneEvent);
+					continue;
 				}
 				else if (!strncmp(buf, "add", 3))
 				{
@@ -77,7 +88,7 @@ void Process::START(int argc, char *argv[])
 					WriteFile(hNamedPipe, reinterpret_cast<char*>(&i), sizeof(int), NULL, NULL);
 					WriteFile(hNamedPipe, answer.c_str(), i, NULL, NULL);
 
-					SetEvent(ATmEvent);
+					SetEvent(PhoneEvent);
 
 				}
 				else if (!strncmp(buf, "State", 5))
@@ -94,7 +105,7 @@ void Process::START(int argc, char *argv[])
 					WriteFile(hNamedPipe, reinterpret_cast<char*>(&i), sizeof(int), NULL, NULL);
 					WriteFile(hNamedPipe, answer.c_str(), i, NULL, NULL);
 
-					SetEvent(ATmEvent);
+					SetEvent(PhoneEvent);
 				}
 			}
 }

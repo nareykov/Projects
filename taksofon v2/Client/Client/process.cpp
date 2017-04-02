@@ -5,8 +5,10 @@ LPSTR Process::PipeName = "\\\\.\\pipe\\$SecurityATmLine$";
 HANDLE Process::hNamedPipe;
 HANDLE Process::UserEvent;
 LPSTR Process::UserEventName = "User";
-HANDLE Process::ATmEvent;
-LPSTR Process::ATmEventName = "ATM";
+HANDLE Process::PhoneEvent;
+LPSTR Process::PhoneEventName = "Phone";
+HANDLE Process::hSemaphore;
+LPSTR Process::SemaphoreName = "Semaphore";
 #endif
 
 using namespace std;
@@ -15,9 +17,20 @@ using namespace std;
 void Process::START(int argc, char *argv[])
 {
 
+	cout << "Waiting";
+
 #ifdef _WIN32
+
+		hSemaphore = OpenSemaphore(SEMAPHORE_ALL_ACCESS, FALSE, SemaphoreName);
+		DWORD dwWaitResult;
+		dwWaitResult = WaitForSingleObject(hSemaphore, 0L);
+		while (dwWaitResult != WAIT_OBJECT_0)
+		{
+			dwWaitResult = WaitForSingleObject(hSemaphore, 1);
+		}
+
 		UserEvent = OpenEvent(EVENT_ALL_ACCESS, FALSE, UserEventName);
-		ATmEvent = OpenEvent(EVENT_ALL_ACCESS, FALSE, ATmEventName);
+		PhoneEvent = OpenEvent(EVENT_ALL_ACCESS, FALSE, PhoneEventName);
 
 
 		hNamedPipe = CreateFile(PipeName, GENERIC_READ | GENERIC_WRITE,
@@ -68,8 +81,8 @@ void Process::START(int argc, char *argv[])
 
 				SetEvent(UserEvent);
 
-				WaitForSingleObject(ATmEvent, INFINITE);
-				ResetEvent(ATmEvent);
+				WaitForSingleObject(PhoneEvent, INFINITE);
+				ResetEvent(PhoneEvent);
 #endif
 				char buf[255];
 				int b;
@@ -113,8 +126,8 @@ void Process::START(int argc, char *argv[])
 
 					SetEvent(UserEvent);
 
-					WaitForSingleObject(ATmEvent, INFINITE);
-					ResetEvent(ATmEvent);
+					WaitForSingleObject(PhoneEvent, INFINITE);
+					ResetEvent(PhoneEvent);
 #endif
 					char buf[255];
 					int b;
@@ -163,8 +176,8 @@ void Process::START(int argc, char *argv[])
 
 				SetEvent(UserEvent);
 
-				WaitForSingleObject(ATmEvent, INFINITE);
-				ResetEvent(ATmEvent);
+				WaitForSingleObject(PhoneEvent, INFINITE);
+				ResetEvent(PhoneEvent);
 #endif
 				char buf[255];
 				int b;
@@ -204,9 +217,14 @@ void Process::START(int argc, char *argv[])
 
 				SetEvent(UserEvent);
 
-#endif
+				WaitForSingleObject(PhoneEvent, INFINITE);
+				ResetEvent(PhoneEvent);
+
 				CloseHandle(hNamedPipe);
+				ReleaseSemaphore(hSemaphore, 1, NULL);
+				CloseHandle(hSemaphore);
 				return;
+#endif
 			}
 		}
 	}

@@ -21,14 +21,17 @@ private:
 	Process() {}
 
 #ifdef _WIN32
+	static HANDLE hSemaphore;
+	static LPSTR SemaphoreName;
+
 	static HANDLE hNamedPipe;
 	static LPSTR PipeName;
 
 	static HANDLE UserEvent;
 	static LPSTR UserEventName;
 
-	static HANDLE ATmEvent;
-	static LPSTR ATmEventName;
+	static HANDLE PhoneEvent;
+	static LPSTR PhoneEventName;
 #endif
 
 public:
