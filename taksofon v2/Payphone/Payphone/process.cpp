@@ -33,6 +33,7 @@ void Process::START(int argc, char *argv[])
 
 			while (true)
 			{
+				ConnectNamedPipe(hNamedPipe, NULL);
 #ifdef _WIN32
 
 				WaitForSingleObject(UserEvent, INFINITE);
@@ -65,8 +66,7 @@ void Process::START(int argc, char *argv[])
 				}
 				else if (!strncmp(buf, "Shutdown", 8))
 				{
-					return;
-
+					DisconnectNamedPipe(hNamedPipe);
 				}
 				else if (!strncmp(buf, "add", 3))
 				{

@@ -39,7 +39,7 @@ void Process::START(int argc, char *argv[])
 			cout << "1. State" << endl;
 			cout << "2. Call" << endl;
 			cout << "3. Add money" << endl;
-			cout << "4. Shutdown system" << endl;
+			cout << "4. Exit" << endl;
 
 			int menu;
 
@@ -78,6 +78,7 @@ void Process::START(int argc, char *argv[])
 				ReadFile(hNamedPipe, reinterpret_cast<char*>(&b), sizeof(int), NULL, NULL);
 				ReadFile(hNamedPipe, buf, b, NULL, NULL);
 #endif
+
 				buf[b] = '\0';
 				if (!strncmp(buf, "You have", 8))
 				{
@@ -190,6 +191,7 @@ void Process::START(int argc, char *argv[])
 			}
 			case 4:
 			{
+
 				system("cls||clear");
 
 				string request = "Shutdown";
@@ -203,6 +205,7 @@ void Process::START(int argc, char *argv[])
 				SetEvent(UserEvent);
 
 #endif
+				CloseHandle(hNamedPipe);
 				return;
 			}
 		}
