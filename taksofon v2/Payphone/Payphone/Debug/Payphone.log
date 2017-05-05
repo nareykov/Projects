@@ -1,6 +1,5 @@
 ﻿  process.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  main.cpp
+c:\users\narey\documents\visual studio 2015\projects\taksofon v2\payphone\payphone\process.cpp(267): warning C4018: '<': signed/unsigned mismatch
+c:\users\narey\documents\visual studio 2015\projects\taksofon v2\payphone\payphone\process.cpp(289): warning C4018: '<': signed/unsigned mismatch
   Payphone.vcxproj -> C:\Users\narey\Documents\Visual Studio 2015\Projects\taksofon v2\Payphone\Debug\Payphone.exe
   Payphone.vcxproj -> C:\Users\narey\Documents\Visual Studio 2015\Projects\taksofon v2\Payphone\Debug\Payphone.pdb (Full PDB)
