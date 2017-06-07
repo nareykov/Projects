@@ -1,0 +1,9 @@
+﻿  FileSystem.cpp
+c:\users\narey\documents\visual studio 2015\projects\fs\fs\item.h(22): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+c:\users\narey\documents\visual studio 2015\projects\fs\fs\item.h(27): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+c:\users\narey\documents\visual studio 2015\projects\fs\fs\filesystem.cpp(56): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+  FS.vcxproj -> C:\Users\narey\Documents\Visual Studio 2015\Projects\FS\Debug\FS.exe
+  FS.vcxproj -> C:\Users\narey\Documents\Visual Studio 2015\Projects\FS\Debug\FS.pdb (Full PDB)
