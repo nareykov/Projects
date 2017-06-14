@@ -21,4 +21,5 @@ public:
 	void rename();
 	void replace();
 	void paste();
+	void showfile();
 };

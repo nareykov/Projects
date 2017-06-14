@@ -23,10 +23,24 @@ void FileSystem::go_to()
 
 void FileSystem::add()
 {
+	int type;
+	cout << "Ввыберите тип (0 - папка, 1 - файл): ";
+	cin >>type;
 	char name[NAME_SIZE];
 	cout << "Введите название элемента: ";
 	cin >> name;
-	currItem->addChild(new Item(name, currItem));
+	if (type) {
+		int size;
+		cout << "Введите размер содержимого: ";
+		cin >> size;
+		char * content = (char *)malloc(size); 
+		cout << "Контент: ";
+		cin >> content;
+		currItem->addChild(new Item(name, currItem, size, content));
+	}
+	else {
+		currItem->addChild(new Item(name, currItem));
+	}
 }
 
 void FileSystem::del()
@@ -66,9 +80,9 @@ void FileSystem::replace()
 	cin >> name;
 	for (int i = 0; i < currItem->size; i++) {
 		if (!strcmp(name, currItem->childs[i]->name)) {
+			buff = currItem->childs[i];
 			currItem->childs.erase(currItem->childs.begin() + i);
 			currItem->size--;
-			buff = currItem->childs[i];
 			return;
 		}
 	}
@@ -79,5 +93,17 @@ void FileSystem::paste()
 	if (buff) {
 		currItem->addChild(buff);
 		buff = NULL;
+	}
+}
+
+void FileSystem::showfile()
+{
+	if (currItem->type) {
+		cout << currItem->content << endl;
+	}
+	else {
+		for (int i = 0; i < currItem->childs.size(); i++) {
+			cout << currItem->childs[i]->name << endl;
+		}
 	}
 }

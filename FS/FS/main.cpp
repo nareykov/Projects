@@ -5,6 +5,7 @@
 int main() {
 
 	setlocale(LC_ALL, "RUS");
+
 	FileSystem * fs = new FileSystem("files");
 
 	int command;
@@ -13,13 +14,11 @@ int main() {
 		system("cls");
 		cout << "Текущая директория :" << fs->currItem->name << endl;
 		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
-		for (int i = 0; i < fs->currItem->childs.size(); i++) {
-			cout << fs->currItem->childs[i]->name << endl;
-		}
+		fs->showfile();
 		cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 		cout << "Выберите команду:" << endl;
 		cout << "1 - Назад" << endl;
-		cout << "2 - Перейти в ..." << endl;
+		cout << "2 - Открыть" << endl;
 		cout << "3 - Добавить" << endl;
 		cout << "4 - Удалить" << endl;
 		cout << "5 - Переименовать" << endl;
